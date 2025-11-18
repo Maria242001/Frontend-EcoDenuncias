@@ -1,0 +1,202 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  /* Fuente manuscrita para toda la aplicación */
+  font-family: "Segoe UI", sans-serif;
+  background: url("../assets/fondo.png") no-repeat center center fixed; /* Asegúrate de que la ruta del fondo sea correcta */
+  background-size: cover;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden; 
+}
+
+/* ------------------------------------------- */
+/* ---------- CONTENEDOR PRINCIPAL ---------- */
+/* ------------------------------------------- */
+.detalle-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  color: #2b3b1f; /* Color base de texto */
+  text-shadow: 0 0 1px #fff; 
+}
+
+/* ------------------------------------------- */
+/* ---------- ENCABEZADO SUPERIOR ---------- */
+/* ------------------------------------------- */
+.detalle-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  /* CAMBIO CLAVE 1: Reducimos el padding de 60px a 40px */
+  padding: 5px 60px 5px 40px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.detalle-header .ley {
+  color: #4b58a7;
+  font-size: 15px;
+  font-weight: bold;
+  /* Margen negativo para forzar la Ley a subir al borde */
+  margin-top: -5px;
+}
+
+.logo {
+  width: 120px; 
+  height: auto; 
+  max-width: 100%; 
+  object-fit: contain; 
+  margin-top: 0; 
+  padding: 5px; 
+  box-sizing: border-box; 
+}
+
+/* ------------------------------------------- */
+/* ---------- TÍTULO PRINCIPAL ("DENUNCIAS") ---------- */
+/* ------------------------------------------- */
+.titulo {
+  display: flex;
+  align-items: center;
+  color: #30561f;
+  gap: 15px;
+  /* Margen superior en 0 */
+  margin-top: 0px; 
+  align-self: flex-start;
+  /* CAMBIO CLAVE 2: Reducimos el margen de 60px a 40px para que coincida con el encabezado */
+  margin-left: 8px; 
+  flex-shrink: 0;
+}
+
+.titulo h1 {
+  font-size: 55px; 
+  margin: 0; 
+  font-weight: 500; 
+}
+
+.icono-alarma {
+  width: 55px; 
+  height: 55px;
+  object-fit: contain;
+}
+
+/* ------------------------------------------- */
+/* ---------- MAIN Y CAJA PRINCIPAL DE DATOS ---------- */
+/* ------------------------------------------- */
+.detalle-main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1; 
+  overflow: hidden; 
+}
+
+.detalle-box {
+  width: 100%;
+  max-width: 1200px;
+  background: rgba(255, 255, 255, 0.8); 
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 25px; 
+  margin: 10px auto 10px auto; 
+  flex-grow: 1; 
+  max-height: calc(100vh - 150px); 
+  overflow-y: auto;
+}
+
+/* ------------------------------------------- */
+/* ---------- ESTILOS ESPECÍFICOS DEL DASHBOARD ---------- */
+/* ------------------------------------------- */
+
+/* Estilo para todos los botones del menú lateral (btn-light de Bootstrap) */
+.detalle-box .btn-light {
+    /* Mantenemos el fondo semitransparente para el menú lateral */
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #30561f;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 14px;
+    text-align: left;
+    font-family: "Segoe UI", sans-serif; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s;
+}
+
+/* Estilo para el botón 'Inicio' seleccionado (active-menu-btn) */
+.detalle-box .active-menu-btn {
+    font-weight: bold;
+    background-color: #d8e7d1; /* Fondo ligeramente más oscuro/verde */
+}
+
+/* Estilo general para las tarjetas de conteo */
+.custom-card-total, 
+.custom-card-resueltas, 
+.custom-card-tramite, 
+.custom-card-vencidas {
+    /* Mantenemos el fondo semitransparente que tenías */
+    background: rgba(255, 255, 255, 0.7); 
+    color: #30561f;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important; 
+    font-family: "Segoe UI", sans-serif; 
+    /* Agregamos una transición de color para un efecto visual al pasar el ratón */
+    transition: all 0.3s ease;
+}
+
+/* NUEVO ESTILO: Recuadro del Icono (Verde Oscuro) */
+.icon-box {
+    /* Fondo verde oscuro */
+    background-color: #30561f; 
+    /* Dimensiones cuadradas (similar a 50px x 50px) */
+    width: 50px; 
+    height: 50px; 
+    /* Bordes redondeados */
+    border-radius: 8px; 
+    /* Centrar la imagen dentro del recuadro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Para que los íconos (si son de color, asuman el color blanco) */
+    filter: invert(100%) brightness(150%);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3); /* Sombra para que se vea en 3D */
+}
+
+.custom-card-total p, .custom-card-total h4 {
+    margin: 0;
+    color: #30561f;
+}
+
+/* Estilos de las tarjetas generales (mapa y gráfico) */
+.detalle-box .card {
+    /* Mantenemos un fondo semi-transparente para las tarjetas de contenido más grandes */
+    background: rgba(255, 255, 255, 0.7); 
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15)!important; 
+    border: none;
+}
+.detalle-box .card h5 {
+    font-family: "Segoe UI", sans-serif; 
+    font-weight: bold;
+    color: #4b58a7;
+    font-size: 18px;
+}
+
+
+/* ------------------------------------------- */
+/* ---------- PIE DE PÁGINA (Footer) ---------- */
+/* ------------------------------------------- */
+.detalle-footer {
+  
+  text-align: center;
+  font-size: 14px;
+  color: blanchedalmond;
+  flex-shrink: 0;
+
+}

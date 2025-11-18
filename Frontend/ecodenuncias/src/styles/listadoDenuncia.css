@@ -1,0 +1,124 @@
+.body{
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* 🌿 TABLA PRINCIPAL */
+
+.denuncias-table  {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 15px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.5); /* Fondo translúcido */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-family: "Segoe UI", sans-serif;
+}
+
+
+/* 🌿 ENCABEZADO CON VERDE TRANSLÚCIDO */
+.denuncias-table thead th {
+  background: linear-gradient(
+    180deg,
+    rgba(167, 221, 139, 0.8) 0%,
+    rgba(118, 201, 142, 0.8) 100%
+  );
+  color: #0d8303; /* 💚 Verde brillante */
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 12px;
+  border-right: 1px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(6px);
+}
+
+
+
+
+/* 🌿 CELDAS DEL CUERPO */
+.denuncias-table tbody td {
+  text-align: center;
+  padding: 10px;
+  color: #1f3c20;
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  font-weight: 500;
+}
+
+.text-dark {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.denuncias-table th:last-child,
+.denuncias-table td:last-child {
+  border-right: none;
+}
+
+/* 🌿 ESTADOS DE LAS DENUNCIAS */
+.estado {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 14px;
+}
+
+.estado.en-tramite {
+  background-color: #f7a400;
+}
+
+.estado.resuelta {
+  background-color: #2ebc43;
+}
+
+.estado.vencida {
+  background-color: #f70b0b;
+}
+
+/* 🌿 PIE Y BOTONES */
+.table-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #1b4d2b;
+}
+
+.pagination button {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  color: #0e3a1a;
+}
+
+.pagination button:hover {
+  background: rgba(120, 200, 120, 0.5);
+}
+
+/* 🌿 LEMA FINAL */
+.lema {
+  font-family: 'Just Another Hand', cursive;
+  font-size: 40px;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 2px 3px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 1px;
+  margin: 20px 0;
+}
+
+/*Caja genera*/
+.container.mt-4 {
+  min-height: 70vh;
+}
+
+

@@ -38,12 +38,12 @@ const Inicio = () => {
 
         {/* ✅ Tarjetas lado derecho */}
         <div className="cards-container d-flex gap-4">
-          <Link to="/consultas" className="boton-card text-center text-decoration-none">
+          <Link to="/consulta" className="boton-card text-center text-decoration-none">
             <img src={consultaIcon} alt="Consultas" className="icono-card" />
             <h5>Consultas</h5>
           </Link>
 
-          <Link to="/solicitudes" className="boton-card text-center text-decoration-none">
+          <Link to="/menuSolicitud" className="boton-card text-center text-decoration-none">
             <img src={solicitudIcon} alt="Solicitudes" className="icono-card" />
             <h5>Solicitudes</h5>
           </Link>

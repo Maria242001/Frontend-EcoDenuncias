@@ -9,7 +9,6 @@ function BarraSuperior() {
         <img src={logo} alt="EcoDenuncias" className="logo-img" />
         <p className="lema-app">“Cuidar el medio ambiente es valorar la vida”</p>
       </div>
-
     </header>
   );
 }

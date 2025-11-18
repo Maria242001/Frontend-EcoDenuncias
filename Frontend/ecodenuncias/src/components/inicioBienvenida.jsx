@@ -15,7 +15,7 @@ const InicioBienvenida = () => {
           rel="noopener noreferrer"
           className="ley-text text-decoration-none fw-bold"
         >
-          Ley 2111 de 2021
+          Ley 2111 de 2021.
         </a>
       </div>
 
