@@ -1,0 +1,108 @@
+.inicio-container {
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+/* Texto Ley */
+.barra-superior {
+  background: transparent;
+  color: white;
+  width: 100%;
+  padding: 15px 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.ley-text {
+  color: #1C109E;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.ley-text:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Tarjetas arriba/derecha */
+.cards-container {
+  position: absolute;
+  right: 50px;
+  top: 150px;
+  display: flex;
+  gap: 25px;
+}
+
+.boton-card {
+  width: 150px;
+  height: 165px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  text-decoration: none;
+  color: #0f5c2c;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.boton-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+}
+
+/* Íconos */
+.icono-card {
+  width: 55px;
+  height: 55px;
+  margin-bottom: 8px;
+  object-fit: contain;
+}
+
+/* Logo y slogan abajo */
+.logo-section {
+  text-align: left;
+  margin-bottom: 40px;
+  padding-left: 0px;
+  
+}
+
+.logo-img {
+  width: 320px;
+}
+
+.slogan {
+  color: white;
+  font-weight: bold;
+  font-size: 22px;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cards-container {
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+  }
+
+  .logo-img {
+    width: 240px;
+  }
+}
