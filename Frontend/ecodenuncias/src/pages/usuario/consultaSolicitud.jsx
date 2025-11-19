@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../styles/consultaSolicitud.css";
 import BarraSuperior from "../../components/barraSuperior.jsx";
+import jsPDF from "jspdf";
 
 function ConsultaSolicitud() {
   const navigate = useNavigate();
@@ -42,10 +43,41 @@ function ConsultaSolicitud() {
     },
   };
 
-  const handleDescargarClick = () => console.log("Descargar solicitud");
+  // Función para descargar PDF vacío
+  const handleDescargarClick = () => {
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Consulta de Solicitud", 20, 20);
+
+    doc.setFontSize(12);
+    let yPos = 40;
+
+    [
+      "radicado",
+      "tipo",
+      "estado",
+      "dependencia",
+      "fechaAsignacion",
+      "direccion",
+      "municipio",
+      "telefono",
+      "correoElectronico",
+    ].forEach((campo) => {
+      doc.text(`${textos[idioma][campo]}: `, 20, yPos);
+      yPos += 10;
+    });
+
+    doc.text(`${textos[idioma].comentarios}: `, 20, yPos + 5);
+
+    doc.save("solicitud.pdf");
+  };
+
+  // Función para finalizar la consulta
   const handleFinalizarClick = () => {
-    console.log("Finalizar solicitud");
-    navigate("/inicio");
+    if (window.confirm("¿Desea finalizar la consulta y volver al inicio?")) {
+      navigate("/inicio");
+    }
   };
 
   return (
@@ -79,7 +111,9 @@ function ConsultaSolicitud() {
                     <Col xs={6} sm={4} className="label-col">
                       <strong>{textos[idioma][campo]}</strong>
                     </Col>
-                    <Col xs={6} sm={8} className="value-col"></Col>
+                    <Col xs={6} sm={8} className="value-col">
+                      {/* Aquí se mostrará la información que venga del backend */}
+                    </Col>
                   </Row>
                 ))}
               </Card.Body>
@@ -96,7 +130,7 @@ function ConsultaSolicitud() {
                   {textos[idioma].comentarios}
                 </Card.Title>
                 <Card.Text className="comentario-texto">
-                  La visita se encuentra aprobada.
+                  {/* Comentarios del backend */}
                 </Card.Text>
               </Card.Body>
             </Card>

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "../styles/listadoDenuncia.css";
-import logo from "../assets/logo.png";
-import alarma from "../assets/icons/alarma.png";
-import fondo from "../assets/fondo.png";
+import "../../styles/listadoDenuncia.css";
+import logo from "../../assets/logo.png";
+import alarma from "../../assets/icons/alarma.png";
+import fondo from "../../assets/fondo.png";
 
 function ListadoDenuncia() {
   const navigate = useNavigate();

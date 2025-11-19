@@ -1,7 +1,8 @@
+/* Contenedor principal de la página de inicio */
 .inicio-container {
   background-size: cover;
   background-position: center;
-  height: 100vh;
+  height: 100vh;            /* altura completa de la pantalla */
   width: 100%;
   position: relative;
   display: flex;
@@ -10,33 +11,86 @@
   padding: 20px;
 }
 
-/* Texto Ley */
+/* ──────────────── 🔹 Barra Superior ──────────────── */
+
+/* Barra fija arriba con el enlace a la ley */
 .barra-superior {
-  background: transparent;
+  background: transparent;   /* fondo transparente */
   color: white;
   width: 100%;
   padding: 15px 30px;
-  position: absolute;
+  position: absolute;        /* fija arriba */
   top: 0;
   left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 10;
+  z-index: 10;               /* sobre el resto del contenido */
 }
 
+/* Estilo del enlace "Ley 2111" */
 .ley-text {
   color: #1C109E;
   font-weight: bold;
-  transition: 0.3s;
+  transition: 0.3s;          /* efecto suave para hover */
 }
 
+/* Hover del enlace */
 .ley-text:hover {
   color: #ffffff;
   text-decoration: underline;
 }
 
-/* Tarjetas arriba/derecha */
+/* ──────────────── 🔹 Logo ──────────────── */
+
+/* Contenedor del logo y tagline */
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;     /* 🔥 Mantiene el logo SIEMPRE a la izquierda */
+  justify-content: center;
+
+  margin-bottom: 40px;
+  padding-left: 0;
+
+  width: 900px;                /* 🔥 Contenedor más ancho para un logo grande */
+  max-width: 100%;
+
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Imagen del logo */
+.logo-img {
+  width: 1000px;                /* 🔥 Tamaño grande */
+  max-width: 100%;             /* Evita desbordar la pantalla */
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Hover */
+.logo-img:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.7));
+}
+
+/* Click activo */
+.logo-img.activo {
+  transform: scale(1.1) rotate(3deg);
+  filter: drop-shadow(0 12px 25px rgba(0,0,0,0.8));
+}
+
+/* Estilo del slogan */
+.slogan {
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  margin-top: 10px;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);       /* sombra para legibilidad */
+}
+
+/* ──────────────── 🔹 Cards / Botones ──────────────── */
+
+/* Contenedor de las tarjetas (Consultas y Solicitudes) */
 .cards-container {
   position: absolute;
   right: 50px;
@@ -45,10 +99,11 @@
   gap: 25px;
 }
 
+/* Tarjetas con icono y título */
 .boton-card {
   width: 150px;
   height: 165px;
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.85);     /* fondo semitransparente */
   border-radius: 20px;
   text-decoration: none;
   color: #0f5c2c;
@@ -58,43 +113,29 @@
   justify-content: center;
   align-items: center;
   transition: 0.2s;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);    /* sombra suave */
 }
 
+/* Animación al pasar el mouse */
 .boton-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px);               /* efecto levantar tarjeta */
   box-shadow: 0 8px 18px rgba(0,0,0,0.35);
 }
 
-/* Íconos */
+/* Iconos dentro de las tarjetas */
 .icono-card {
   width: 55px;
   height: 55px;
   margin-bottom: 8px;
-  object-fit: contain;
+  object-fit: contain;                       /* no se deforma */
 }
 
-/* Logo y slogan abajo */
-.logo-section {
-  text-align: left;
-  margin-bottom: 40px;
-  padding-left: 0px;
-  
-}
+/* ──────────────── 🔹 Responsive ──────────────── */
 
-.logo-img {
-  width: 320px;
-}
-
-.slogan {
-  color: white;
-  font-weight: bold;
-  font-size: 22px;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-}
-
-/* Responsive */
+/* Cuando la pantalla es menor a 768px */
 @media (max-width: 768px) {
+
+  /* Las tarjetas se colocan una debajo de otra */
   .cards-container {
     position: static;
     flex-direction: column;
@@ -102,7 +143,14 @@
     margin-top: 40px;
   }
 
+  /* El logo se centra en móviles */
+  .logo-section {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Tamaño reducido del logo para pantallas pequeñas */
   .logo-img {
-    width: 240px;
+    width: 500px;
   }
 }
