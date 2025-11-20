@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "../components/Sidebar"; // Asegúrate de que la ruta coincida
-import fondo from "../assets/fondo.png";
-import logo from "../assets/logo_texto.png";
+import Sidebar from "../../components/sidebar"; // Asegúrate de que la ruta coincida
+import fondo from "../../assets/fondo.png";
+import logo from "../../assets/logo_texto.png";
 import "../../styles/homeAdmin.css";
 import { Modal, Button } from "react-bootstrap";   // IGNORE
 

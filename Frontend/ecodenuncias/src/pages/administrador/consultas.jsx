@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import "../../styles/consultasAdmin.css";
 import consIcon from "../../assets/icons/cons_icon.png";
 import logo from "../../assets/logo_texto.png";
-
 import { Doughnut, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -23,33 +22,370 @@ ChartJS.register(
   Legend
 );
 
-export default function ConsultasA() {
+export default function Consultas() {
+  // Tipo principal (botones Denuncias / Solicitudes)
   const [tipo, setTipo] = useState("denuncias");
 
-  const dataPorTipo = {
-    denuncias: {
-      total: 1125,
-      activas: 640,
-      archivadas: 304,
-      promedio: 8,
-      flujo: [45, 68, 80, 92, 150, 120, 130, 140, 160, 170, 150, 120],
-      distribucion: [65, 25, 10],
+  // Estados de los filtros
+  const [fechaInicio, setFechaInicio] = useState("");
+  const [fechaFin, setFechaFin] = useState("");
+  const [territorial, setTerritorial] = useState("");
+  const [municipio, setMunicipio] = useState("");
+  const [estado, setEstado] = useState("");
+
+  /* ============================
+     Datos base (estructura JSON)
+     - fecha en formato ISO "YYYY-MM-DD" para facilitar comparaciones
+     - agrega/ajusta registros reales según necesites
+     ============================ */
+  const registros = [
+    {
+      radicado: "A-00000001",
+      tipo: "Denuncia",
+      categoria: "Trafico de especies",
+      municipio: "Piendamó",
+      territorial: "Centro",
+      fecha: "2024-03-05",
+      estado: "En Trámite",
+      responsable: "Carlos M. Rodríguez",
     },
-    solicitudes: {
-      total: 320,
-      activas: 210,
-      archivadas: 100,
-      promedio: 5,
-      flujo: [20, 40, 55, 60, 100, 80, 95, 110, 120, 130, 110, 90],
-      distribucion: [20, 70, 10],
+    {
+      radicado: "S-00000001",
+      tipo: "Solicitud",
+      categoria: "Permiso de Vertimientos",
+      municipio: "Piendamó",
+      territorial: "Centro",
+      fecha: "2024-03-09",
+      estado: "Archivada",
+      responsable: "Carlos M. Rodríguez",
     },
+    {
+      radicado: "A-00000003",
+      tipo: "Denuncia",
+      categoria: "Deforestacion",
+      municipio: "Popayán",
+      territorial: "Centro",
+      fecha: "2023-01-09",
+      estado: "Vencida",
+      responsable: "María F. Rodríguez",
+    },
+    {
+      radicado: "A-00000004",
+      tipo: "Denuncia",
+      categoria: "Contaminación",
+      municipio: "Suárez",
+      territorial: "Pacífico",
+      fecha: "2023-02-15",
+      estado: "En Trámite",
+      responsable: "Luis A. Gómez",
+    },
+    {
+      radicado: "S-00000005",
+      tipo: "Solicitud",
+      categoria: "Licencia Ambiental",
+      municipio: "Rosas",
+      territorial: "Macizo",
+      fecha: "2023-02-20",
+      estado: "Resuelta",
+      responsable: "Ana M. Díaz",
+    },
+    {
+      radicado: "A-00000006",
+      tipo: "Denuncia",
+      categoria: "Ruido Ambiental",
+      municipio: "Timbío",
+      territorial: "Macizo",
+      fecha: "2023-02-22",
+      estado: "Archivada",
+      responsable: "David M. Castro",
+    },
+    {
+      radicado: "S-00000007",
+      tipo: "Solicitud",
+      categoria: "Uso de Suelos",
+      municipio: "Popayán",
+      territorial: "Centro",
+      fecha: "2023-03-05",
+      estado: "En Trámite",
+      responsable: "Camila H. Soto",
+    },
+    {
+      radicado: "A-00000008",
+      tipo: "Denuncia",
+      categoria: "Basuras",
+      municipio: "Piendamó",
+      territorial: "Centro",
+      fecha: "2023-03-07",
+      estado: "Resuelta",
+      responsable: "José L. Gutiérrez",
+    },
+    {
+      radicado: "S-00000009",
+      tipo: "Solicitud",
+      categoria: "Visita Tecnica",
+      municipio: "Suárez",
+      territorial: "Pacífico",
+      fecha: "2023-03-12",
+      estado: "En Trámite",
+      responsable: "Sofía M. Ortiz",
+    },
+    {
+      radicado: "A-00000010",
+      tipo: "Denuncia",
+      categoria: "Vertimientos Ilegales",
+      municipio: "Rosas",
+      territorial: "Macizo",
+      fecha: "2023-03-15",
+      estado: "Resuelta",
+      responsable: "Daniel T. Rojas",
+    },
+    {
+      radicado: "A-00000011",
+      tipo: "Denuncia",
+      categoria: "Ruido Industrial",
+      municipio: "Timbío",
+      territorial: "Macizo",
+      fecha: "2023-03-17",
+      estado: "Archivada",
+      responsable: "Carla G. Pérez",
+    },
+    {
+      radicado: "S-00000012",
+      tipo: "Solicitud",
+      categoria: "Uso de suelos",
+      municipio: "Popayán",
+      territorial: "Centro",
+      fecha: "2023-03-18",
+      estado: "En Trámite",
+      responsable: "Juan M. Hernández",
+    },
+    {
+      radicado: "A-00000013",
+      tipo: "Denuncia",
+      categoria: "Deforestación",
+      municipio: "Piendamó",
+      territorial: "Centro",
+      fecha: "2023-03-20",
+      estado: "Resuelta",
+      responsable: "Laura C. Núñez",
+    },
+    {
+      radicado: "S-00000014",
+      tipo: "Solicitud",
+      categoria: "Control de Fauna",
+      municipio: "Suárez",
+      territorial: "Pacífico",
+      fecha: "2023-03-21",
+      estado: "Archivada",
+      responsable: "María L. Gómez",
+    },
+    {
+      radicado: "A-00000015",
+      tipo: "Denuncia",
+      categoria: "Contaminación Sonora",
+      municipio: "Timbío",
+      territorial: "Macizo",
+      fecha: "2023-03-22",
+      estado: "En Trámite",
+      responsable: "Carlos J. Mejía",
+    },
+  ];
+
+  /* ============================
+     Valores de UI basados en datos
+     (listas de territoriales y municipios disponibles)
+     ============================ */
+  const territorialesDisponibles = useMemo(() => {
+    const setTerr = new Set(registros.map((r) => r.territorial));
+    return ["", ...Array.from(setTerr)];
+  }, [registros]);
+
+  const municipiosDisponibles = useMemo(() => {
+    const setMun = new Set(registros.map((r) => r.municipio));
+    return ["", ...Array.from(setMun)];
+  }, [registros]);
+
+  /* ============================
+     FILTRADO: aplica todos los filtros al conjunto de registros
+     - tipo: si 'denuncias' -> solo 'Denuncia', si 'solicitudes' -> solo 'Solicitud'
+     - fechas: compara por Date
+     - territorial, municipio, estado: coincidencia exacta si se selecciona
+     ============================ */
+  const datosFiltrados = useMemo(() => {
+    // convertimos fechas una sola vez
+    const inicio = fechaInicio ? new Date(fechaInicio) : null;
+    // Si fechaFin se selecciona la convertimos y la ajustamos para incluir el día completo
+    const fin = fechaFin ? new Date(fechaFin + "T23:59:59") : null;
+
+    return registros.filter((r) => {
+      // filtro por tipo (botones)
+      if (tipo === "denuncias" && r.tipo !== "Denuncia") return false;
+      if (tipo === "solicitudes" && r.tipo !== "Solicitud") return false;
+
+      // filtro territorial
+      if (territorial && territorial !== "" && r.territorial !== territorial)
+        return false;
+
+      // filtro municipio
+      if (municipio && municipio !== "" && r.municipio !== municipio) return false;
+
+      // filtro estado
+      if (estado && estado !== "" && r.estado !== estado) return false;
+
+      // filtro fechas por campo fecha (ISO)
+      if (inicio) {
+        const fechaRegistro = new Date(r.fecha);
+        if (fechaRegistro < inicio) return false;
+      }
+      if (fin) {
+        const fechaRegistro = new Date(r.fecha);
+        if (fechaRegistro > fin) return false;
+      }
+
+      return true;
+    });
+  }, [registros, tipo, territorial, municipio, estado, fechaInicio, fechaFin]);
+
+  /* ============================
+     ESTADÍSTICAS CALCULADAS desde datosFiltrados
+     ============================ */
+  const stats = useMemo(() => {
+    const total = datosFiltrados.length;
+    // activas: contamos los que tienen estado que contenga 'Trámite' / 'En Trámite' (ajustable)
+    const activas = datosFiltrados.filter((d) =>
+      /Trámite/i.test(d.estado)
+    ).length;
+    const archivadas = datosFiltrados.filter(
+      (d) => /Archivad/i.test(d.estado) || /Archivada/i.test(d.estado)
+    ).length;
+    // promedio simple: ejemplo: promedio fijo basado en current mock (puedes calcular en base a tiempos reales)
+    // Aquí solo calculamos un promedio de días entre fecha y hoy para demostración si quisieras
+    let promedio = 0;
+    if (total > 0) {
+      // promedio = promedio de antigüedad en días (solo ejemplo)
+      const hoy = new Date();
+      const sumaDias = datosFiltrados.reduce((acc, cur) => {
+        const diff = Math.abs((hoy - new Date(cur.fecha)) / (1000 * 60 * 60 * 24));
+        return acc + diff;
+      }, 0);
+      promedio = Math.round(sumaDias / total);
+    }
+
+    return { total, activas, archivadas, promedio };
+  }, [datosFiltrados]);
+
+  /* ============================
+     GRÁFICA: Flujo mensual calculado desde datosFiltrados
+     ============================ */
+  const flujoMensual = useMemo(() => {
+    const meses = new Array(12).fill(0);
+    datosFiltrados.forEach((d) => {
+      const m = new Date(d.fecha).getMonth();
+      meses[m] += 1;
+    });
+    return meses;
+  }, [datosFiltrados]);
+
+  const dataFlujo = {
+    labels: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
+    datasets: [
+      {
+        label: tipo === "denuncias" ? "Denuncias" : "Solicitudes",
+        data: flujoMensual,
+        backgroundColor:
+          tipo === "denuncias"
+            ? "rgba(76, 175, 80, 0.7)"
+            : "rgba(139, 195, 74, 0.7)",
+        borderRadius: 8,
+      },
+    ],
   };
 
-  const current = dataPorTipo[tipo];
+  /* ============================
+     GRÁFICA: Distribución por tipo (Denuncias / Solicitudes / Otros)
+     - Nota: si el filtro 'tipo' está activo la gráfica reflejará ese filtro.
+     ============================ */
+  const dataDistribucion = useMemo(() => {
+    const contDen = datosFiltrados.filter((d) => d.tipo === "Denuncia").length;
+    const contSol = datosFiltrados.filter((d) => d.tipo === "Solicitud").length;
+    const contOtros = Math.max(0, datosFiltrados.length - contDen - contSol);
 
+    return {
+      labels: ["Denuncias", "Solicitudes", "Otros"],
+      datasets: [
+        {
+          data: [contDen, contSol, contOtros],
+          backgroundColor: [
+            "rgba(76, 175, 80, 0.8)",
+            "rgba(139, 195, 74, 0.8)",
+            "rgba(200, 230, 201, 0.8)",
+          ],
+          borderWidth: 2,
+          borderColor: "#fff",
+        },
+      ],
+    };
+  }, [datosFiltrados]);
+
+  /* ============================
+     TABLAS MINI: agregados por Territorial y por Municipio
+     calculamos DENUNCIAS y SOLICITUDES por territoral/municipio
+     ============================ */
+  const agregadosTerritorial = useMemo(() => {
+    const map = {};
+    registros.forEach((r) => {
+      const key = r.territorial || "Sin Territorial";
+      if (!map[key]) map[key] = { denuncia: 0, solicitud: 0 };
+      if (r.tipo === "Denuncia") map[key].denuncia++;
+      if (r.tipo === "Solicitud") map[key].solicitud++;
+    });
+
+    // Convertimos a array
+    return Object.entries(map).map(([territorial, counts]) => ({
+      territorial,
+      denuncias: counts.denuncia,
+      solicitudes: counts.solicitud,
+    }));
+  }, [registros]);
+
+  // NOTA: para mostrar los mini-tablas *filtrados por los filtros actuales* (como pediste),
+  // calculamos usando datosFiltrados:
+  const agregadosTerritorialFiltrados = useMemo(() => {
+    const map = {};
+    datosFiltrados.forEach((r) => {
+      const key = r.territorial || "Sin Territorial";
+      if (!map[key]) map[key] = { denuncia: 0, solicitud: 0 };
+      if (r.tipo === "Denuncia") map[key].denuncia++;
+      if (r.tipo === "Solicitud") map[key].solicitud++;
+    });
+    return Object.entries(map).map(([territorial, counts]) => ({
+      territorial,
+      denuncias: counts.denuncia,
+      solicitudes: counts.solicitud,
+    }));
+  }, [datosFiltrados]);
+
+  const agregadosMunicipioFiltrados = useMemo(() => {
+    const map = {};
+    datosFiltrados.forEach((r) => {
+      const key = r.municipio || "Sin Municipio";
+      if (!map[key]) map[key] = { denuncia: 0, solicitud: 0 };
+      if (r.tipo === "Denuncia") map[key].denuncia++;
+      if (r.tipo === "Solicitud") map[key].solicitud++;
+    });
+    return Object.entries(map).map(([municipio, counts]) => ({
+      municipio,
+      denuncias: counts.denuncia,
+      solicitudes: counts.solicitud,
+    }));
+  }, [datosFiltrados]);
+
+  /* ============================
+     Opciones de chart (puedes mantener las tuyas)
+     ============================ */
   const optionsFlujo = {
     responsive: true,
-    maintainAspectRatio: false /*se adapta al contenedor css */,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "bottom",
@@ -78,26 +414,10 @@ export default function ConsultasA() {
     },
   };
 
-  const dataFlujo = {
-    labels: [ "Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep",
-      "Oct", "Nov", "Dic"],
-    datasets: [
-      {
-        label: tipo === "denuncias" ? "Denuncias" : "Solicitudes",
-        data: current.flujo,
-        backgroundColor:
-          tipo === "denuncias"
-            ? "rgba(76, 175, 80, 0.7)"
-            : "rgba(139, 195, 74, 0.7)",
-        borderRadius: 8,
-      },
-    ],
-  };
-
   const optionsDistribucion = {
     responsive: true,
     maintainAspectRatio: false,
-    cutout: "70%",
+    cutout: "65%",
     plugins: {
       legend: {
         position: "right",
@@ -120,22 +440,9 @@ export default function ConsultasA() {
     },
   };
 
-  const dataDistribucion = {
-    labels: ["Denuncias", "Solicitudes", "Otros"],
-    datasets: [
-      {
-        data: current.distribucion,
-        backgroundColor: [
-          "rgba(76, 175, 80, 0.8)",
-          "rgba(139, 195, 74, 0.8)",
-          "rgba(200, 230, 201, 0.8)",
-        ],
-        borderWidth: 2,
-        borderColor: "#fff",
-      },
-    ],
-  };
-
+  /* ============================
+     RENDER
+     ============================ */
   return (
     <>
       {/* Enlace fuera del contenedor principal */}
@@ -150,10 +457,10 @@ export default function ConsultasA() {
         </a>
       </div>
 
-      {/* === Logo fuera del contenedor, esquina superior derecha === */}
+      {/* Logo superior */}
       <img src={logo} alt="Logo" className="logo-superior" />
 
-      {/* Título fuera del contenedor */}
+      {/* Título */}
       <div className="consultas-titulo">
         <img src={consIcon} alt="icono consultas" className="consultas-icono" />
         <h1>CONSULTAS</h1>
@@ -162,88 +469,125 @@ export default function ConsultasA() {
       <div className="consultas-container">
         <section className="consultas-filtros">
           <h3>Consulta y Análisis de Requerimientos</h3>
+
           <div className="filtros-grid">
+            {/* Tipo */}
             <div>
-                <label>Tipo</label>
-                <div className="btn-group">
-                  <button
-                    className={`btn btn-light btn-sm ${
-                      tipo === "denuncias" ? "active" : ""
-                    }`}
-                    onClick={() => setTipo("denuncias")}
-                  >
-                    Denuncias
-                  </button>
-                  <button
-                    className={`btn btn-light btn-sm ${
-                      tipo === "solicitudes" ? "active" : ""
-                    }`}
-                    onClick={() => setTipo("solicitudes")}
-                  >
-                    Solicitudes
-                  </button>
+              <label>Tipo</label>
+              <div className="btn-group">
+                <button
+                  className={`btn btn-light btn-sm ${tipo === "denuncias" ? "active" : ""}`}
+                  onClick={() => setTipo("denuncias")}
+                >
+                  Denuncia
+                </button>
+                <button
+                  className={`btn btn-light btn-sm ${tipo === "solicitudes" ? "active" : ""}`}
+                  onClick={() => setTipo("solicitudes")}
+                >
+                  Solicitud
+                </button>
               </div>
             </div>
+
+            {/* Fecha */}
             <div>
-              <label>Fecha</label>
+              <label>Fecha (Inicio - Fin)</label>
               <div className="d-flex gap-2">
-                <input type="date" className="form-control form-control-sm" />
-                <input type="date" className="form-control form-control-sm" />
+                <input
+                  type="date"
+                  className="form-control form-control-sm"
+                  value={fechaInicio}
+                  onChange={(e) => setFechaInicio(e.target.value)}
+                />
+                <input
+                  type="date"
+                  className="form-control form-control-sm"
+                  value={fechaFin}
+                  onChange={(e) => setFechaFin(e.target.value)}
+                />
               </div>
             </div>
+
+            {/* Territorial */}
             <div>
               <label>Territorial</label>
-              <select className="form-select form-select-sm">
-                <option>Seleccione...</option>
-                <option>Centro</option>
-                <option>Pacífico</option>
-                <option>Macizo</option>
+              <select
+                className="form-select form-select-sm"
+                value={territorial}
+                onChange={(e) => setTerritorial(e.target.value)}
+              >
+                <option value="">Seleccione...</option>
+                {territorialesDisponibles
+                  .filter((t) => t !== "")
+                  .map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
               </select>
             </div>
+
+            {/* Municipio */}
             <div>
               <label>Municipio</label>
-              <select className="form-select form-select-sm">
-                <option>Seleccione...</option>
-                <option>Popayán</option>
-                <option>Suárez</option>
-                <option>Piendamó</option>
+              <select
+                className="form-select form-select-sm"
+                value={municipio}
+                onChange={(e) => setMunicipio(e.target.value)}
+              >
+                <option value="">Seleccione...</option>
+                {municipiosDisponibles
+                  .filter((m) => m !== "")
+                  .map((m) => (
+                    <option key={m} value={m}>
+                      {m}
+                    </option>
+                  ))}
               </select>
             </div>
+
+            {/* Estado */}
             <div>
               <label>Estado</label>
-              <select className="form-select form-select-sm">
-                <option>Seleccione...</option>
-                <option>Resuelta</option>
-                <option>Vencida</option>
-                <option>Archivada</option>
+              <select
+                className="form-select form-select-sm"
+                value={estado}
+                onChange={(e) => setEstado(e.target.value)}
+              >
+                <option value="">Seleccione...</option>
+                {/* Lista dinámica de estados únicos */}
+                {Array.from(new Set(registros.map((r) => r.estado))).map((st) => (
+                  <option key={st} value={st}>
+                    {st}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
         </section>
 
+        {/* Estadísticas principales calculadas desde datosFiltrados */}
         <section className="consultas-stats">
           <div className="stat-card">
             <h5>Total Requerimientos</h5>
-            <h2>{current.total}</h2>
+            <h2>{stats.total}</h2>
           </div>
           <div className="stat-card">
-            <h5>
-              {tipo === "denuncias"
-                ? "Denuncias Activas"
-                : "Solicitudes Activas"}
-            </h5>
-            <h2>{current.activas}</h2>
+            <h5>{tipo === "denuncias" ? "Denuncias Activas" : "Solicitudes Activas"}</h5>
+            <h2>{stats.activas}</h2>
           </div>
           <div className="stat-card">
             <h5>Archivados</h5>
-            <h2>{current.archivadas}</h2>
+            <h2>{stats.archivadas}</h2>
           </div>
           <div className="stat-card">
             <h5>Tiempo Promedio</h5>
-            <h2>{current.promedio} días</h2>
+            <h2>{stats.promedio} días</h2>
           </div>
         </section>
 
+        {/* Gráficas y tablas pequeñas (se actualizan según filtros) */}
         <section className="consultas-graficos">
           <div className="grafico-card">
             <h6>Flujo mensual de Requerimientos</h6>
@@ -270,31 +614,21 @@ export default function ConsultasA() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Centro</td>
-                  <td>120</td>
-                  <td>20</td>
-                </tr>
-                <tr>
-                  <td>Norte</td>
-                  <td>84</td>
-                  <td>15</td>
-                </tr>
-                <tr>
-                  <td>Tierradentro</td>
-                  <td>35</td>
-                  <td>136</td>
-                </tr>
-                <tr>
-                  <td>Pacífico</td>
-                  <td>25</td>
-                  <td>62</td>
-                </tr>
-                <tr>
-                  <td>Macizo</td>
-                  <td>36</td>
-                  <td>84</td>
-                </tr>
+                {agregadosTerritorialFiltrados.length > 0 ? (
+                  agregadosTerritorialFiltrados.map((row) => (
+                    <tr key={row.territorial}>
+                      <td>{row.territorial}</td>
+                      <td>{row.denuncias}</td>
+                      <td>{row.solicitudes}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={3} className="text-center">
+                      No hay datos
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -310,36 +644,27 @@ export default function ConsultasA() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Popayán</td>
-                  <td>200</td>
-                  <td>60</td>
-                </tr>
-                <tr>
-                  <td>Suárez</td>
-                  <td>96</td>
-                  <td>45</td>
-                </tr>
-                <tr>
-                  <td>Piendamó</td>
-                  <td>110</td>
-                  <td>38</td>
-                </tr>
-                <tr>
-                  <td>Timbío</td>
-                  <td>25</td>
-                  <td>100</td>
-                </tr>
-                <tr>
-                  <td>Rosas</td>
-                  <td>104</td>
-                  <td>15</td>
-                </tr>
+                {agregadosMunicipioFiltrados.length > 0 ? (
+                  agregadosMunicipioFiltrados.map((row) => (
+                    <tr key={row.municipio}>
+                      <td>{row.municipio}</td>
+                      <td>{row.denuncias}</td>
+                      <td>{row.solicitudes}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={3} className="text-center">
+                      No hay datos
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
         </section>
 
+        {/* Tabla de resultados (filtrada) */}
         <section className="consultas-tabla">
           <h6>Resultados</h6>
 
@@ -357,156 +682,31 @@ export default function ConsultasA() {
                 </tr>
               </thead>
               <tbody>
-                {/* 🔹 Ejemplos repetidos para probar scroll */}
-                {[
-                  [
-                    "A-00000001",
-                    "Denuncia",
-                    "Trafico de especies",
-                    "Piendamó",
-                    "05/03/2024",
-                    "En Trámite",
-                    "Carlos M. Rodríguez",
-                  ],
-                  [
-                    "S-00000001",
-                    "Solicitud",
-                    "Permiso de Vertimientos",
-                    "Piendamó",
-                    "09/03/2024",
-                    "Archivada",
-                    "Carlos M. Rodríguez",
-                  ],
-                  [
-                    "A-00000003",
-                    "Denuncia",
-                    "Deforestacion",
-                    "Popayán",
-                    "09/01/2023",
-                    "Vencida",
-                    "María F. Rodríguez",
-                  ],
-                  [
-                    "A-00000004",
-                    "Denuncia",
-                    "Contaminación",
-                    "Suárez",
-                    "15/02/2023",
-                    "En Trámite",
-                    "Luis A. Gómez",
-                  ],
-                  [
-                    "S-00000005",
-                    "Solicitud",
-                    "Licencia Ambiental",
-                    "Rosas",
-                    "20/02/2023",
-                    "Resuelta",
-                    "Ana M. Díaz",
-                  ],
-                  [
-                    "A-00000006",
-                    "Denuncia",
-                    "Ruido Ambiental",
-                    "Timbío",
-                    "22/02/2023",
-                    "Archivada",
-                    "David M. Castro",
-                  ],
-                  [
-                    "S-00000007",
-                    "Solicitud",
-                    "Uso de Suelos",
-                    "Popayán",
-                    "05/03/2023",
-                    "En Trámite",
-                    "Camila H. Soto",
-                  ],
-                  [
-                    "A-00000008",
-                    "Denuncia",
-                    "Basuras",
-                    "Piendamó",
-                    "07/03/2023",
-                    "Resuelta",
-                    "José L. Gutiérrez",
-                  ],
-                  [
-                    "S-00000009",
-                    "Solicitud",
-                    "Visita Tecnica",
-                    "Suárez",
-                    "12/03/2023",
-                    "En Trámite",
-                    "Sofía M. Ortiz",
-                  ],
-                  [
-                    "A-00000010",
-                    "Denuncia",
-                    "Vertimientos Ilegales",
-                    "Rosas",
-                    "15/03/2023",
-                    "Resuelta",
-                    "Daniel T. Rojas",
-                  ],
-                  [
-                    "A-00000011",
-                    "Denuncia",
-                    "Ruido Industrial",
-                    "Timbío",
-                    "17/03/2023",
-                    "Archivada",
-                    "Carla G. Pérez",
-                  ],
-                  [
-                    "S-00000012",
-                    "Solicitud",
-                    "Uso de suelos",
-                    "Popayán",
-                    "18/03/2023",
-                    "En Trámite",
-                    "Juan M. Hernández",
-                  ],
-                  [
-                    "A-00000013",
-                    "Denuncia",
-                    "Deforestación",
-                    "Piendamó",
-                    "20/03/2023",
-                    "Resuelta",
-                    "Laura C. Núñez",
-                  ],
-                  [
-                    "S-00000014",
-                    "Solicitud",
-                    "Control de Fauna",
-                    "Suárez",
-                    "21/03/2023",
-                    "Archivada",
-                    "María L. Gómez",
-                  ],
-                  [
-                    "A-00000015",
-                    "Denuncia",
-                    "Contaminación Sonora",
-                    "Timbío",
-                    "22/03/2023",
-                    "En Trámite",
-                    "Carlos J. Mejía",
-                  ],
-                ]
-                  .filter((row) =>
-                    tipo === "denuncias"
-                      ? row[1] === "Denuncia"
-                      : row[1] === "Solicitud"
-                  )
-                  .map((row, index) => (
+                {datosFiltrados.length > 0 ? (
+                  datosFiltrados.map((row, index) => (
                     <tr key={index}>
-                      {row.map((cell, i) => (
-                        <td key={i}>{cell}</td>
-                      ))}
+                      <td>{row.radicado}</td>
+                      <td>{row.tipo}</td>
+                      <td>{row.categoria}</td>
+                      <td>{row.municipio}</td>
+                      <td>
+                        {new Date(row.fecha).toLocaleDateString("es-CO", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        })}
+                      </td>
+                      <td>{row.estado}</td>
+                      <td>{row.responsable}</td>
                     </tr>
-                  ))}
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={7} className="text-center">
+                      No se encontraron resultados con los filtros aplicados.
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

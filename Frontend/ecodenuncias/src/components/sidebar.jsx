@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom"; // ✅ Importa Link
+import { Link } from "react-router-dom"; 
 import "../styles/sidebar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -22,7 +22,7 @@ export default function Sidebar() {
 
         {/* ✅ Denuncias con enlace funcional */}
         <div className="menu-item">
-          <Link to="/denuncia" className="menu-link">
+          <Link to="/admin/denuncia" className="menu-link">
             <img src={denIcon} alt="Denuncias" className="menu-icon" />
             <span>DENUNCIAS</span>
           </Link>

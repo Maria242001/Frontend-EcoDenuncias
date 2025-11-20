@@ -28,6 +28,7 @@ const Inicio = () => {
         {/* 🟢 LOGO Y SLOGAN */}
         <div className="logo-section">
           <img
+          
             src={logo}
             alt="EcoDenuncias"
             className="logo-img"

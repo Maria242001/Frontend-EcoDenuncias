@@ -1,13 +1,13 @@
 import React from "react";
 import "../styles/barraSuperior.css";
-import logo from "../assets/logo.png"; // 🔹 Asegúrate que la ruta sea correcta
+import logoTexto from "../assets/logo_texto.png"; // 🔹 Asegúrate que la ruta sea correcta
 
 function BarraSuperior() {
   return (
     <header className="barra-superior">
       <div className="logo-container">
-        <img src={logo} alt="EcoDenuncias" className="logo-img" />
-        <p className="lema-app">“Cuidar el medio ambiente es valorar la vida”</p>
+        <img src={logoTexto} alt="EcoDenuncias" className="logo-img" />
+      
       </div>
     </header>
   );

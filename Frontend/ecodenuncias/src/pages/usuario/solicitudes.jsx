@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../../styles/solicitudes.css";
+import "../../styles/solicitudesUsu.css";
 import BarraSuperior from "../../components/barraSuperior";
 import { useNavigate } from "react-router-dom";
 

@@ -1,135 +1,100 @@
-/* 🔹 Ajustes globales */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden;
-}
-
-/* 🔹 Fondo principal */
+/* 🌿 Fondo general */
 .fondo-container {
-  background-image: url("../assets/fondo.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
-  position: relative;
-  color: #fff;
-  text-align: center;
+  background: url("../assets/fondo.png") no-repeat center center/cover;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
 }
 
 /* 🔹 Barra superior */
 .barra-superior {
-  background: transparent;
-  color: white;
-  width: 100%;
-  padding: 15px 30px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
+  background: rgba(0, 0, 0, 0.2);
+  color: rgb(255, 255, 255, 0.8);
 }
 
 .ley-text {
-  color: #2e7d32;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.ley-text:hover {
-  color: #ffffff;
-  text-decoration: underline;
+  font-size: 16px;
+  color: #1C109E
 }
 
 /* 🔹 Contenido principal */
+/* 🔹 Forzar que el contenido se alinee a la izquierda */
 .contenido {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
-  padding: 2rem;
-  margin-top: 4rem;
+  margin-top: 3rem;
+  display: flex;             /* activa flexbox */
+  justify-content: flex-start !important; /* alinea a la izquierda */
+  align-items: flex-start;
+  gap: 2rem;                 /* separa logo y tarjeta */
 }
 
-/* 🔹 Logo */
+
+/* 🖼 LOGO */
 .logo {
-  width: 350px;
-  height: auto;
-  margin-bottom: 15px;
-  filter: drop-shadow(0px 0px 8px rgba(0, 0, 0, 0.5));
+  max-width: 100%;
+  width: 320px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+   height: auto;
+  display: block;
+
+
 }
 
-/* 🔹 Eslogan */
-.eslogan {
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: #ffffff;
-  text-shadow: 1px 1px 3px #000;
-  margin-bottom: 2rem;
-  font-family: 'Just Another Hand', cursive;
+.logo-animado.activo {
+  transform: scale(1.08);
 }
 
-/* 🔹 Tarjeta bienvenida */
+/* 📄 Tarjeta de bienvenida (derecha) */
 .bienvenida {
-  max-width: 700px;               /* 👉 Más ancho */
-  width: 95%;                     /* Se adapta a pantallas pequeñas */
-  background: rgba(255, 255, 255, 0.4);
+  max-width: 700px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 20px;
+  padding: 2rem 2.5rem;
   color: #1a1a1a;
-  padding: 2rem 3rem;             /* Un poco más de espacio lateral */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); /* sombra visible */
   text-align: justify;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-  font-size: 13px;
-  transform: translateY(-35px);   /* 👉 Lo sube hacia arriba */
-  transition: all 0.3s ease;      /* Animación suave si lo cambias dinámicamente */
-}
-
-/* 🔹 Botón INGRESAR ajustado */
-.btn-ingresar {
-  background-color: #2e8b57;
-  border: none;
-  font-weight: 600;
-  font-size: 0.9rem;   /* antes 1.1rem */
-  padding: 6px 25px;   /* antes 10px 50px */
-  border-radius: 20px; /* antes 30px */
   transition: all 0.3s ease;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  
-}
-
-.btn-ingresar:hover {
-  background-color: #23774a;
-  transform: scale(1.05);
+  transform: translateX(300px); /* lo mueve a la derecha */
+  margin-top: 90px;
 }
 
 
-/* 🔹 Responsive */
+/* 🔘 Botón de ingresar */
+.btn-ingresar {
+  font-size: 1.1rem;
+  font-weight: 600;
+  transform: translateX(450px);
+}
+
+/* 📱 Responsividad */
 @media (max-width: 768px) {
-  html, body {
-    overflow-y: auto;
+   .contenido {
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center;
   }
 
-  .contenido {
-    flex-direction: column;
-    margin-top: 3rem;
+  .logo {
+    max-width: 200px;
   }
 
   .bienvenida {
-    width: 95%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    max-width: 160px;
   }
 
-  .btn-container {
-    position: static;
-    margin-top: 20px;
+  .bienvenida {
+    font-size: 14px;
+    padding: 1.2rem;
   }
 }

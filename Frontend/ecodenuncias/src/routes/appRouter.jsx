@@ -18,10 +18,22 @@ import Denuncia from "../pages/administrador/denuncia.jsx";
 import ConsultasA from "../pages/administrador/consultas.jsx";
 import Sidebar from "../components/sidebar.jsx";
 import Ayuda from "../pages/usuario/ayuda.jsx";
+import HomeAdmin from "../pages/administrador/homeAdmin.jsx";
+
+//IMPORTS DE FUNCIONARIO
+import ListadoFuncionario from "../pages/funcionario/listadoFuncionario.jsx";
+import RolesPermisosFuncionario from "../pages/funcionario/rolesPermisosFuncionario.jsx";
+
+
 
 function AppRouter() {
   return (
     <Routes>
+      {/* 🔹 RUTAS DE INICIO DE SESIÓN */}
+
+
+
+
       {/* 🔹 RUTAS DE USUARIO */}
       <Route path="/" element={<Sidebar />} />
       <Route path="/inicioBienvenida" element={<InicioBienvenida />} />
@@ -36,12 +48,18 @@ function AppRouter() {
 
 
       {/* 🔹 RUTAS DE ADMINISTRADOR */}
-      <Route path="/denuncia" element={<Denuncia />} />
-      <Route path="/listado-denuncia" element={<ListadoDenuncia />} />
-      <Route path="/denuncia-detalle" element={<DenunciaDetalle />} />
-      <Route path="/busqueda" element={<Busqueda />} />
-      <Route path="/consulta-admin" element={<ConsultasA />} />
+      <Route path="/admin/home " element={<HomeAdmin />} />
+      <Route path="/admin/denuncia" element={<Denuncia />} />
+      <Route path="/admin/listado-denuncia" element={<ListadoDenuncia />} />
+      <Route path="/admin/denuncia-detalle" element={<DenunciaDetalle />} />
+      <Route path="/admin/busqueda" element={<Busqueda />} />
+      <Route path="/admin/consulta-admin" element={<ConsultasA />} />
 
+
+
+      {/*RUTAS DE FUNCIONARIO*/ }
+      <Route path="/funcionario/listaFuncionario" element={<ListadoFuncionario />} />
+      <Route path="/funcionario/rolesPermisos" element={<RolesPermisosFuncionario />} />
     </Routes>
   );
 }

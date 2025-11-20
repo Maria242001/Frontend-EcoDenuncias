@@ -1,13 +1,13 @@
 /* Contenedor principal de la página de inicio */
 .inicio-container {
-  background-size: cover;
-  background-position: center;
-  height: 100vh;            /* altura completa de la pantalla */
+  background-size: cover;           /* La imagen de fondo cubre toda la pantalla */
+  background-position: center;      /* Centra la imagen */
+  height: 100vh;                    /* Ocupa toda la altura visible */
   width: 100%;
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex-direction: column;           /* Elementos en columna */
+  justify-content: space-between;   /* Espacio entre elementos */
   padding: 20px;
 }
 
@@ -15,24 +15,24 @@
 
 /* Barra fija arriba con el enlace a la ley */
 .barra-superior {
-  background: transparent;   /* fondo transparente */
+  background: transparent;          /* Fondo transparente */
   color: white;
   width: 100%;
   padding: 15px 30px;
-  position: absolute;        /* fija arriba */
+  position: absolute;               /* Posición fija arriba */
   top: 0;
   left: 0;
-  display: flex;
-  justify-content: space-between;
+  display: flex;                    /* Flexbox para acomodar elementos */
+  justify-content: space-between;   /* Enlaces a los extremos */
   align-items: center;
-  z-index: 10;               /* sobre el resto del contenido */
+  z-index: 10;                      /* Se muestra encima de todo */
 }
 
 /* Estilo del enlace "Ley 2111" */
 .ley-text {
   color: #1C109E;
   font-weight: bold;
-  transition: 0.3s;          /* efecto suave para hover */
+  transition: 0.3s;                 /* Animación suave */
 }
 
 /* Hover del enlace */
@@ -43,39 +43,39 @@
 
 /* ──────────────── 🔹 Logo ──────────────── */
 
-/* Contenedor del logo y tagline */
 .logo-section {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;     /* 🔥 Mantiene el logo SIEMPRE a la izquierda */
-  justify-content: center;
+  flex-direction: column;           /* Logo + slogan uno debajo del otro */
+  align-items: flex-start;          /* Alineado a la izquierda */
+  justify-content: center;          /* Centrado verticalmente */
 
   margin-bottom: 40px;
   padding-left: 0;
 
-  width: 900px;                /* 🔥 Contenedor más ancho para un logo grande */
-  max-width: 100%;
+  width: 1600px;                     /* Ancho del contenedor */
+  max-width: none;                  /* Evita desbordar pantalla */
 
   transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 /* Imagen del logo */
 .logo-img {
-  width: 1000px;                /* 🔥 Tamaño grande */
-  max-width: 100%;             /* Evita desbordar la pantalla */
-  cursor: pointer;
+  width: 320px;                    /* Tamaño base del logo */
+  max-width: 100%;                  /* Se adapta a pantallas pequeñas */
+  cursor: pointer;                  /* Cursor de mano */
   transition: transform 0.3s ease, filter 0.3s ease;
+   height: auto
 }
 
 /* Hover */
 .logo-img:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.7));
+  transform: scale(1.05);           /* Aumenta un poco el tamaño */
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,0.2));  /* Sombra */
 }
 
 /* Click activo */
 .logo-img.activo {
-  transform: scale(1.1) rotate(3deg);
+  transform: scale(1.1) rotate(3deg); /* Efecto animado */
   filter: drop-shadow(0 12px 25px rgba(0,0,0,0.8));
 }
 
@@ -85,40 +85,40 @@
   font-weight: bold;
   font-size: 24px;
   margin-top: 10px;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.7);       /* sombra para legibilidad */
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.7); /* Mejora visibilidad en fondos claros */
 }
 
 /* ──────────────── 🔹 Cards / Botones ──────────────── */
 
-/* Contenedor de las tarjetas (Consultas y Solicitudes) */
+/* Contenedor de tarjetas (Consultas y Solicitudes) */
 .cards-container {
-  position: absolute;
-  right: 50px;
-  top: 150px;
+  position: absolute;               /* Ubicación exacta */
+  right: 50px;                      /* Lado derecho */
+  top: 150px;                       /* Bajado hacia abajo */
   display: flex;
-  gap: 25px;
+  gap: 25px;                        /* Espacio entre tarjetas */
 }
 
 /* Tarjetas con icono y título */
 .boton-card {
   width: 150px;
   height: 165px;
-  background: rgba(255, 255, 255, 0.85);     /* fondo semitransparente */
+  background: rgba(255, 255, 255, 0.85);  /* Semi transparente */
   border-radius: 20px;
   text-decoration: none;
   color: #0f5c2c;
   font-weight: bold;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center;           /* Contenido centrado */
   align-items: center;
   transition: 0.2s;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.25);    /* sombra suave */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25); /* Sombra suave */
 }
 
 /* Animación al pasar el mouse */
 .boton-card:hover {
-  transform: translateY(-6px);               /* efecto levantar tarjeta */
+  transform: translateY(-6px);      /* Levanta la tarjeta */
   box-shadow: 0 8px 18px rgba(0,0,0,0.35);
 }
 
@@ -127,7 +127,9 @@
   width: 55px;
   height: 55px;
   margin-bottom: 8px;
-  object-fit: contain;                       /* no se deforma */
+  object-fit: contain;
+  color: #0f5c2c;     
+        
 }
 
 /* ──────────────── 🔹 Responsive ──────────────── */
@@ -135,21 +137,21 @@
 /* Cuando la pantalla es menor a 768px */
 @media (max-width: 768px) {
 
-  /* Las tarjetas se colocan una debajo de otra */
+  /* Tarjetas una debajo de otra */
   .cards-container {
-    position: static;
-    flex-direction: column;
+    position: static;               /* Ya no es absoluta */
+    flex-direction: column;         /* En columna */
     align-items: center;
     margin-top: 40px;
   }
 
-  /* El logo se centra en móviles */
+  /* Logo centrado en móviles */
   .logo-section {
-    width: 100%;
+    width: 900px;
     text-align: center;
   }
 
-  /* Tamaño reducido del logo para pantallas pequeñas */
+  /* Tamaño del logo en pantallas pequeñas */
   .logo-img {
     width: 500px;
   }
